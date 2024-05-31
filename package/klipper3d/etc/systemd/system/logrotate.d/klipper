@@ -1,0 +1,12 @@
+  
+/tmp/klippy.log
+{
+    rotate 7
+    daily
+    maxsize 64M
+    missingok
+    notifempty
+    compress
+    delaycompress
+    sharedscripts
+}

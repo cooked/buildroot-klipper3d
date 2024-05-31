@@ -1,0 +1,15 @@
+config BR2_PACKAGE_KLIPPER3D_REPL
+	bool "klipper3d-repl"
+	
+	select BR2_PACKAGE_PYTHON_PROMPT_TOOLKIT
+	select BR2_PACKAGE_PYTHON_PYGMENTS
+
+	help
+	  The missing Klipper command line.
+
+	  https://github.com/unjordy/klipper-repl
+
+
+if BR2_PACKAGE_KLIPPER3D_REPL
+
+endif

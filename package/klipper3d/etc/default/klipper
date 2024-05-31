@@ -1,0 +1,3 @@
+KLIPPY_USER=root
+KLIPPY_EXEC=/usr/bin/python
+KLIPPY_ARGS="/opt/klipper/klippy/klippy.py /opt/klipper/printer.cfg -l /tmp/klippy.log"

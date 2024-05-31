@@ -1,0 +1,62 @@
+config BR2_PACKAGE_KLIPPER3D
+	bool "klipper3d"
+	
+	select BR2_PACKAGE_LIBFFI
+	select BR2_PACKAGE_LIBUSB
+	select BR2_PACKAGE_LIBUSB_DEV
+	select BR2_PACKAGE_PYTHON3
+	select BR2_PACKAGE_PYTHON_PIP
+	select BR2_PACKAGE_PYTHON_CFFI
+	select BR2_PACKAGE_PYTHON_SERIAL
+	select BR2_PACKAGE_PYTHON_GREENLET
+	select BR2_PACKAGE_PYTHON_JINJA2
+	select BR2_PACKAGE_PYTHON_CAN
+	select BR2_PACKAGE_PYTHON_MARKUPSAFE
+	select BR2_PACKAGE_STM32FLASH
+	select BR2_PACKAGE_BINUTILS
+	select BR2_PACKAGE_BINUTILS_TARGET
+	select BR2_PACKAGE_PKGCONF
+
+	help
+	  Klipper is a 3d-Printer firmware. It combines the power of a 
+	  general purpose computer with one or more micro-controllers.
+
+	  https://github.com/Klipper3d/klipper
+
+
+if BR2_PACKAGE_KLIPPER3D
+
+menu "Klipper host (klippy.py)"
+	depends on BR2_PACKAGE_KLIPPER3D
+
+	choice
+    	prompt "Klipper user"
+		config BR2_PACKAGE_KLIPPER3D_USER_ROOT
+			tristate "root"
+		config BR2_PACKAGE_KLIPPER3D_USER_PI
+			tristate "pi"
+	endchoice
+endmenu
+
+menu "Klipper target (MCU firmware)"
+	depends on BR2_PACKAGE_KLIPPER3D
+endmenu
+
+config BR2_PACKAGE_KLIPPER3D_CONFIG
+	string "Klipper configuration file to use?"
+	default "$(BR2_EXTERNAL)/package/klipper3d/klipper_f401.config"
+	help
+	  Select the klipper config file matching your 3D printing 
+	  hardware: uC, port, etc.
+
+	choice
+    	prompt "Select Klipper printer config"
+    	depends on BR2_PACKAGE_KLIPPER3D
+
+		config BR2_PACKAGE_KLIPPER3D_PRNT_XYZ
+			tristate "XYZ only"
+		config BR2_PACKAGE_KLIPPER3D_PRNT_ENDER2
+			tristate "Ender 2"
+	endchoice
+
+endif

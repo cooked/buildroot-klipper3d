@@ -1,0 +1,19 @@
+[project]
+name = "klipper-repl"
+version = "0.2.0"
+description = "The missing Klipper command line"
+dependencies = [
+    "prompt-toolkit>=3.0.38",
+    "pygments>=2.15.1"
+]
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+include = ["klipper_repl"]
+
+[project.scripts]
+klipper-repl = "klipper_repl.cli:main"
+
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"

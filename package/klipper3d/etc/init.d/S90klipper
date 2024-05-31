@@ -1,0 +1,63 @@
+#!/bin/sh
+# System startup script for Klipper 3d-printer host code
+
+### BEGIN INIT INFO
+# Provides:          klipper
+# Required-Start:    $local_fs
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Klipper daemon
+# Description:       Starts the Klipper daemon.
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DESC="klipper daemon"
+NAME="klipper"
+DEFAULTS_FILE=/etc/default/klipper
+PIDFILE=/var/run/klipper.pid
+
+#. /lib/lsb/init-functions
+
+# Read defaults file
+[ -r $DEFAULTS_FILE ] && . $DEFAULTS_FILE
+
+case "$1" in
+start)  printf "Starting %s: " $NAME
+        start-stop-daemon --start --quiet --exec $KLIPPY_EXEC \
+                          --background --pidfile $PIDFILE --make-pidfile \
+                          --chuid $KLIPPY_USER --user $KLIPPY_USER \
+                          -- $KLIPPY_ARGS
+        status=$?
+        if [ "$status" -eq 0 ]; then
+            echo "OK"
+        else
+            echo "FAIL"
+        fi
+        ;;
+stop)   printf "Stopping %s: " $NAME
+        start-stop-daemon -K -q -p $PIDFILE -R TERM/30/KILL/5 -n $KLIPPY_EXEC
+        status=$?
+        if [ "$status" -eq 0 ]; then
+            rm -f "$PIDFILE"
+            echo "OK"
+        else
+            echo "FAIL"
+        fi
+        ;;
+restart)
+        $0 stop
+        $0 start
+        ;;
+reload|force-reload)
+        printf "Reloading configuration not supported for %s" $NAME
+        ;;
+status)
+        status_of_proc -p $PIDFILE $KLIPPY_EXEC $NAME && exit 0 || exit $?
+        ;;
+*)      echo "Usage: /etc/init.d/klipper {start|stop|status|restart|reload|force-reload}"
+        exit 2
+        ;;
+esac
+exit 0
+
