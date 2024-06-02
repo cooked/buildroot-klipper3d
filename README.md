@@ -30,14 +30,24 @@ git checkout 2023.11.x
 # configure the external folder (do nothing, exit without saving)
 make BR2_EXTERNAL=../buildroot-klipper3d menuconfig
 
-# check that custom configurations are listed
-make list-defconfigs
-
-# load config and build
+# load Buildroot config
 make raspberrypi4_klipper3d_defconfig
+
+# configure Klipper firmware
+make klipper3d-menuconfig
+
+# build everything
 make
+```
+
+## Flash Klipper firmware
+
+The Klipper microcontroller code still needs to be flashed manually from the Raspberry. The exact command to use depends on the target MCU, but for an STM32 will look like this: 
+
+```bash
+./stm32flash -w /opt/klipper3d/out/klipper.bin /dev/ttyAMA0
 ```
 
 ## Reference
 
-Read more about [Buildroot basics](https://www.stefanocottafavi.com/buildroot_basics/) and how to [build a realtime Linux kernel](https://www.stefanocottafavi.com/buildroot_rpi_kernel_rt/) with it.
+Read more about the [Buildroot basics](https://www.stefanocottafavi.com/buildroot_basics/) or this [project development](https://www.stefanocottafavi.com/buildroot_klipper3d/).
