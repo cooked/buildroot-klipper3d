@@ -6,8 +6,7 @@
 
 *buildroot-klipper3d* is a [Buildroot external tree](https://buildroot.org/downloads/manual/manual.html#outside-br-custom) that provides the necessary configuation files to build Klipper as a Buildroot package.
 
-**- IMPORTANT -**  
-The package has been tested on (a Buildroot build for) the Raspberry Pi 4, which runs the Klipper3d host, connected to a [printHAT 2](https://docs.wrecklab.com/phat2/) control board based on the STM32F401 microcontroller.
+The package has been tested on a build for Raspberry Pi 4, which runs the Klipper3d host, connected to a [printHAT 2](https://docs.wrecklab.com/phat2/) control board based on the STM32F401 microcontroller.
 
 
 ## Getting started
@@ -40,12 +39,19 @@ make klipper3d-menuconfig
 make
 ```
 
-## Flash Klipper firmware
+## Flashing Klipper firmware
 
-The Klipper microcontroller code still needs to be flashed manually from the Raspberry. The exact command to use depends on the target MCU, but for an STM32 will look like this: 
+The Klipper microcontroller code still needs to be flashed manually from the Raspberry. The exact command to use depends on the target MCU; for an STM32 will look like this: 
 
 ```bash
 ./stm32flash -w /opt/klipper3d/out/klipper.bin /dev/ttyAMA0
+```
+
+**NOTE**    
+Possibly, after flashing the MCU, the firmware shall be restarted:
+
+```bash
+echo FIRMWARE_RESTART > /dev/ttyAMA0
 ```
 
 ## Reference
