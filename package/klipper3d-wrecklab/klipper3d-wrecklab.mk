@@ -13,6 +13,8 @@ KLIPPER3D_WRECKLAB_DEPENDENCIES = klipper3d
 #	cp -rf $(@D)/src/modules/klipper/filesystem/home/pi/klipper_config/config  $(TARGET_DIR)/opt/wrecklab
 #	cp $(KLIPPER3D_WRECKLAB_PKGDIR)/opt/klipper/config/printer_xyz.cfg  $(TARGET_DIR)/opt/wrecklab/config
 
+# cp $(@D)/src/modules/wrecklab/filesystem/boot/firstrun  $(BINARIES_DIR)/klipper3d-wrecklab
+
 define KLIPPER3D_WRECKLAB_INSTALL_TARGET_CMDS
 
 	mkdir -p -m 0755 $(TARGET_DIR)/opt/wrecklab
@@ -22,7 +24,7 @@ define KLIPPER3D_WRECKLAB_INSTALL_TARGET_CMDS
 
 endef
 
-# cp $(@D)/src/modules/wrecklab/filesystem/boot/firstrun  $(BINARIES_DIR)/klipper3d-wrecklab
+
 define KLIPPER3D_WRECKLAB_INSTALL_IMAGES_CMDS
 
 endef

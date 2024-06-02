@@ -15,21 +15,9 @@ if BR2_PACKAGE_KLIPPER3D_WRECKLAB
 config BR2_PACKAGE_KLIPPER3D_WRECKLAB_FIRSTRUN
       bool "Flash the MCU on first system run"
       help
-        Selecting this option will add ascripts and file for the system 
+        Selecting this option will add a script and file for the system 
 		to automatically try to flash the MCU of the connected control
-		board (note that the control board might need to be in bootloader
-		mode, manually)
-		
-menu "Control Boards"
-	depends on BR2_PACKAGE_KLIPPER3D_WRECKLAB
-
-	choice
-    	prompt "printHAT"
-		config BR2_PACKAGE_KLIPPER3D_WRECKLAB_PHAT1
-			tristate "printHAT 1.0"
-		config BR2_PACKAGE_KLIPPER3D_WRECKLAB_PHAT2
-			tristate "printHAT 2.0"
-	endchoice
-endmenu
+		board (note that the control board needs to be put in bootloader
+		mode manually)
 
 endif

@@ -15,10 +15,7 @@ KLIPPER3D_DEFAULT_FILE = $(TARGET_DIR)/etc/default/klipper
 
 
 # Klipper src/ configuration
-ifndef KLIPPER3D_CONFIG_FILE
-KLIPPER3D_CONFIG_FILE = $(call qstrip,$(BR2_PACKAGE_KLIPPER3D_CONFIG))
-endif
-KLIPPER3D_KCONFIG_FILE = $(KLIPPER3D_CONFIG_FILE)
+KLIPPER3D_KCONFIG_FILE = $(call qstrip,$(BR2_PACKAGE_KLIPPER3D_SRC_CONFIG))
 KLIPPER3D_KCONFIG_DEPENDENCIES = \
 	host-arm-gnu-toolchain-old \
 	$(BR2_MAKE_HOST_DEPENDENCY)
@@ -28,15 +25,11 @@ KLIPPER3D_KCONFIG_DEPENDENCIES = \
 KLIPPER3D_MAKE_OPTS = CROSS_PREFIX=$(HOST_DIR)/bin/arm-none-eabi-
 KLIPPER3D_KLIPPY_MAKE_OPTS = DIR=$(@D)/klippy/chelper CC=$(TARGET_CC)
 
-define KLIPPER3D_BUILD_CMDS
-	cp $(KLIPPER3D_PKGDIR)/klipper_f401.config $(@D)/.config
+
+define KLIPPER3D_BUILD_CMDS	
 	$(BR2_MAKE) $(KLIPPER3D_MAKE_OPTS) -C $(@D)
 	$(BR2_MAKE) $(KLIPPER3D_KLIPPY_MAKE_OPTS) -C $(KLIPPER3D_PKGDIR)/klippy $(@D)/klippy/chelper/c_helper.so
 endef
-
-
-# [ ! -d ${KLIPPER_PYTHON_DIR} ] && virtualenv -p python3 ${KLIPPER_PYTHON_DIR}
-# ${KLIPPER_PYTHON_DIR}/bin/pip install -r ${@D}/scripts/klippy-requirements.txt
 
 # TODO move printer.cfg download to <pkg>_EXTRA_DOWNLOADS
 #$(@D)/config
@@ -60,7 +53,6 @@ endef
 define KLIPPER3D_INSTALL_INIT_SYSV
 	mkdir -p -m 0755 $(TARGET_DIR)/etc/default
 	cp $(KLIPPER3D_PKGDIR)/etc/default/klipper $(TARGET_DIR)/etc/default
-
 	$(INSTALL) -m 0755 -D $(KLIPPER3D_PKGDIR)/etc/init.d/S90klipper $(TARGET_DIR)/etc/init.d
 endef
 
